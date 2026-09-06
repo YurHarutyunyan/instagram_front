@@ -34,7 +34,7 @@ export function NewPostPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="imageUrl" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="imageUrl" className="mb-1 block text-sm font-medium text-blue-700">
             Image URL
           </label>
           <input
@@ -44,15 +44,15 @@ export function NewPostPage() {
             value={imageUrl}
             onChange={(event) => setImageUrl(event.target.value)}
             placeholder="https://example.com/photo.jpg"
-            className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+            className="w-full rounded-md border border-blue-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
           />
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs text-blue-400">
             Must be a public URL — Instagram fetches the image server-side.
           </p>
         </div>
 
         <div>
-          <label htmlFor="caption" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="caption" className="mb-1 block text-sm font-medium text-blue-700">
             Caption
           </label>
           <textarea
@@ -60,7 +60,7 @@ export function NewPostPage() {
             rows={4}
             value={caption}
             onChange={(event) => setCaption(event.target.value)}
-            className="w-full resize-none rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+            className="w-full resize-none rounded-md border border-blue-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
           />
         </div>
 
@@ -71,7 +71,7 @@ export function NewPostPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:bg-slate-300"
+          className="rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 disabled:bg-blue-300"
         >
           {submitting ? 'Publishing…' : 'Publish'}
         </button>

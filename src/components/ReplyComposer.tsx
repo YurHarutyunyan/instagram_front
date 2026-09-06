@@ -25,14 +25,14 @@ export function ReplyComposer({
   }
 
   return (
-    <div className="flex items-end gap-2 border-t border-slate-200 pt-3">
+    <div className="flex items-end gap-2 border-t border-blue-200 pt-3">
       <textarea
         value={text}
         onChange={(event) => setText(event.target.value)}
         placeholder={placeholder}
         rows={2}
         disabled={disabled || sending}
-        className="flex-1 resize-none rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none disabled:bg-slate-100"
+        className="flex-1 resize-none rounded-md border border-blue-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none disabled:bg-blue-100"
         onKeyDown={(event) => {
           if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault()
@@ -44,7 +44,7 @@ export function ReplyComposer({
         type="button"
         onClick={() => void handleSend()}
         disabled={disabled || sending || !text.trim()}
-        className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+        className="rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-blue-300"
       >
         {sending ? 'Sending…' : 'Send'}
       </button>

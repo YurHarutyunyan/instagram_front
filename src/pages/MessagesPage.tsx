@@ -40,27 +40,27 @@ export function MessagesPage() {
     )
   }
 
-  if (loading) return <p className="text-sm text-slate-500">Loading…</p>
+  if (loading) return <p className="text-sm text-blue-500">Loading…</p>
 
   return (
     <div>
       <h1 className="mb-6 text-xl font-semibold">Messages</h1>
-      <div className="flex h-[70vh] overflow-hidden rounded-lg border border-slate-200 bg-white">
-        <ul className="w-64 shrink-0 divide-y divide-slate-200 overflow-y-auto border-r border-slate-200">
+      <div className="flex h-[70vh] overflow-hidden rounded-lg border border-blue-200 bg-white">
+        <ul className="w-64 shrink-0 divide-y divide-blue-200 overflow-y-auto border-r border-blue-200">
           {conversations.map((conversation) => (
             <li key={conversation.id}>
               <button
                 type="button"
                 onClick={() => setSelectedId(conversation.id)}
                 className={`w-full px-4 py-3 text-left text-sm ${
-                  selectedId === conversation.id ? 'bg-slate-100' : 'hover:bg-slate-50'
+                  selectedId === conversation.id ? 'bg-blue-100' : 'hover:bg-blue-50'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-medium">@{conversation.participantUsername}</span>
                   {conversation.unread && <span className="h-2 w-2 rounded-full bg-sky-500" />}
                 </div>
-                <p className="mt-0.5 truncate text-xs text-slate-500">
+                <p className="mt-0.5 truncate text-xs text-blue-500">
                   {conversation.lastMessagePreview}
                 </p>
               </button>
@@ -78,8 +78,8 @@ export function MessagesPage() {
                     key={message.id}
                     className={`max-w-xs rounded-lg px-3 py-2 text-sm ${
                       message.direction === 'outbound'
-                        ? 'ml-auto bg-slate-900 text-white'
-                        : 'bg-slate-100 text-slate-800'
+                        ? 'ml-auto bg-blue-900 text-white'
+                        : 'bg-blue-100 text-blue-800'
                     }`}
                   >
                     {message.text}
@@ -89,7 +89,7 @@ export function MessagesPage() {
               <ReplyComposer onSend={handleSend} placeholder="Reply to this conversation…" />
             </>
           ) : (
-            <p className="text-sm text-slate-500">No conversations yet.</p>
+            <p className="text-sm text-blue-500">No conversations yet.</p>
           )}
         </div>
       </div>

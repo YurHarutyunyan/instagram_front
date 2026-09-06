@@ -51,14 +51,14 @@ export function DashboardPage() {
         <h1 className="text-xl font-semibold">Dashboard</h1>
         <Link
           to="/posts/new"
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+          className="rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800"
         >
           New Post
         </Link>
       </div>
 
-      <h2 className="mb-3 text-sm font-medium text-slate-500">Recent activity</h2>
-      {loading ? <p className="text-sm text-slate-500">Loading…</p> : <ActivityFeed entries={entries} />}
+      <h2 className="mb-3 text-sm font-medium text-blue-500">Recent activity</h2>
+      {loading ? <p className="text-sm text-blue-500">Loading…</p> : <ActivityFeed entries={entries} />}
     </div>
   )
 }

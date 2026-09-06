@@ -17,11 +17,11 @@ function formatTimestamp(timestamp: string): string {
 
 export function ActivityFeed({ entries }: { entries: ActivityEntry[] }) {
   if (entries.length === 0) {
-    return <p className="text-sm text-slate-500">No recent activity.</p>
+    return <p className="text-sm text-blue-500">No recent activity.</p>
   }
 
   return (
-    <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+    <ul className="divide-y divide-blue-200 rounded-lg border border-blue-200 bg-white">
       {entries.map((entry) => (
         <li key={entry.id} className="flex items-start gap-3 px-4 py-3">
           <span
@@ -32,11 +32,11 @@ export function ActivityFeed({ entries }: { entries: ActivityEntry[] }) {
             {entry.type === 'comment' ? 'Comment' : 'DM'}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-sm text-slate-900">
+            <p className="text-sm text-blue-900">
               <span className="font-medium">@{entry.username}</span>{' '}
-              <span className="text-slate-600">{entry.text}</span>
+              <span className="text-blue-600">{entry.text}</span>
             </p>
-            <p className="mt-0.5 text-xs text-slate-400">{formatTimestamp(entry.timestamp)}</p>
+            <p className="mt-0.5 text-xs text-blue-400">{formatTimestamp(entry.timestamp)}</p>
           </div>
         </li>
       ))}

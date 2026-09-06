@@ -30,7 +30,7 @@ export function CommentsPage() {
     setReplyingTo(null)
   }
 
-  if (loading) return <p className="text-sm text-slate-500">Loading…</p>
+  if (loading) return <p className="text-sm text-blue-500">Loading…</p>
 
   return (
     <div className="max-w-2xl space-y-8">
@@ -40,10 +40,10 @@ export function CommentsPage() {
         if (postComments.length === 0) return null
         return (
           <div key={post.mediaId}>
-            <p className="mb-2 text-sm font-medium text-slate-500 line-clamp-1">{post.caption}</p>
+            <p className="mb-2 text-sm font-medium text-blue-500 line-clamp-1">{post.caption}</p>
             <ul className="space-y-3">
               {postComments.map((comment) => (
-                <li key={comment.id} className="rounded-lg border border-slate-200 bg-white p-4">
+                <li key={comment.id} className="rounded-lg border border-blue-200 bg-white p-4">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">@{comment.username}</span>
                     {comment.replied && (
@@ -52,7 +52,7 @@ export function CommentsPage() {
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 text-sm text-slate-700">{comment.text}</p>
+                  <p className="mt-1 text-sm text-blue-700">{comment.text}</p>
 
                   {replyingTo === comment.id ? (
                     <div className="mt-3">
@@ -62,7 +62,7 @@ export function CommentsPage() {
                     <button
                       type="button"
                       onClick={() => setReplyingTo(comment.id)}
-                      className="mt-2 text-xs font-medium text-slate-500 hover:text-slate-800"
+                      className="mt-2 text-xs font-medium text-blue-500 hover:text-blue-800"
                     >
                       Reply
                     </button>
