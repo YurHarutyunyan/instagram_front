@@ -9,8 +9,8 @@ const navItems = [
 
 export function Layout() {
   return (
-    <div className="flex min-h-screen bg-blue-50 text-blue-900">
-      <aside className="w-56 shrink-0 border-r border-blue-200 bg-blue-100">
+    <div className="flex min-h-screen bg-red-50 text-blue-900">
+      <aside className="w-56 shrink-0 border-r border-blue-200 bg-red-100">
         <div className="px-5 py-5 text-lg font-semibold">IG Automation</div>
         <nav className="flex flex-col gap-1 px-3">
           {navItems.map((item) => (
