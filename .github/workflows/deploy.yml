@@ -26,10 +26,12 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to server
+	- name: Deploy to server
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          cat > ~/.ssh/deploy_key << 'EOF'
+          ${{ secrets.SSH_PRIVATE_KEY }}
+          EOF
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
           rsync -avzr --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/instagram_front/dist/
