@@ -1,6 +1,13 @@
+import type { Account } from '../types/account'
 import type { Comment } from '../types/comment'
 import type { Conversation } from '../types/message'
 import type { Post } from '../types/post'
+
+export const mockAccount: Account = {
+  username: 'brightsmiles.clinic',
+  name: 'Bright Smiles Dental Clinic',
+  avatarUrl: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=200',
+}
 
 export const mockPosts: Post[] = [
   {
@@ -9,6 +16,7 @@ export const mockPosts: Post[] = [
     caption: 'Bright smiles start here ✨ Book your free consultation this week!',
     permalink: 'https://www.instagram.com/p/Cxxxxxxxxx1/',
     createdAt: '2026-09-01T09:15:00Z',
+    tags: ['dental', 'consultation', 'brightsmiles'],
   },
   {
     mediaId: '17900000000000002',
@@ -16,6 +24,7 @@ export const mockPosts: Post[] = [
     caption: 'Meet Dr. Sargsyan, our lead orthodontist. Ask us about invisible aligners!',
     permalink: 'https://www.instagram.com/p/Cxxxxxxxxx2/',
     createdAt: '2026-08-28T14:30:00Z',
+    tags: ['orthodontist', 'aligners', 'meettheteam'],
   },
   {
     mediaId: '17900000000000003',
@@ -23,6 +32,7 @@ export const mockPosts: Post[] = [
     caption: 'Whitening special all September — 20% off for new patients.',
     permalink: 'https://www.instagram.com/p/Cxxxxxxxxx3/',
     createdAt: '2026-08-20T11:00:00Z',
+    tags: ['whitening', 'promo', 'newpatients'],
   },
 ]
 
@@ -53,6 +63,7 @@ export const mockComments: Comment[] = [
     timestamp: '2026-08-29T10:05:00Z',
     likeCount: 1,
     replied: true,
+    repliedAt: '2026-08-29T10:15:00Z',
   },
   {
     id: 'c4',

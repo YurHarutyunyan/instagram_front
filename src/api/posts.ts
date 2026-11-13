@@ -1,14 +1,6 @@
 import { mockPosts } from '../mocks/fixtures'
-import type { CreatePostRequest, CreatePostResponse, Post } from '../types/post'
-import { apiFetch, sleep } from './client'
-
-// REAL: backend implements POST /posts today (see insta_api PostController).
-export async function createPost(request: CreatePostRequest): Promise<CreatePostResponse> {
-  return apiFetch<CreatePostResponse>('/posts', {
-    method: 'POST',
-    body: JSON.stringify(request),
-  })
-}
+import type { Post } from '../types/post'
+import { sleep } from './client'
 
 // MOCK: backend has no GET /posts (list) endpoint yet — swap this body for
 // apiFetch<Post[]>('/posts') once it exists.

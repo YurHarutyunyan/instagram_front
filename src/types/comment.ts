@@ -6,4 +6,5 @@ export interface Comment {
   timestamp: string
   likeCount: number
   replied: boolean
+  repliedAt?: string
 }

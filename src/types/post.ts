@@ -4,14 +4,5 @@ export interface Post {
   caption: string
   permalink: string
   createdAt: string
-}
-
-export interface CreatePostRequest {
-  imageUrl: string
-  caption: string
-}
-
-export interface CreatePostResponse {
-  mediaId: string
-  permalink: string
+  tags: string[]
 }

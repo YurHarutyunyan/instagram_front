@@ -10,8 +10,12 @@ export async function listComments(mediaId?: string): Promise<Comment[]> {
 
 // MOCK: backend has no manual reply-to-comment endpoint yet — today replies
 // only happen automatically via the /webhook -> ReplyRulesService flow.
-export async function replyToComment(commentId: string, _text: string): Promise<void> {
+export async function replyToComment(commentId: string, _text: string): Promise<Comment | undefined> {
   await sleep(300)
   const comment = mockComments.find((c) => c.id === commentId)
-  if (comment) comment.replied = true
+  if (comment) {
+    comment.replied = true
+    comment.repliedAt = new Date().toISOString()
+  }
+  return comment
 }

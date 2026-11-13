@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { listComments } from '../api/comments'
 import { listConversations } from '../api/messages'
 import { ActivityFeed, type ActivityEntry } from '../components/ActivityFeed'
@@ -47,15 +46,7 @@ export function DashboardPage() {
 
   return (
     <div className="max-w-3xl">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Dashboard</h1>
-        <Link
-          to="/posts/new"
-          className="rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800"
-        >
-          New Post
-        </Link>
-      </div>
+      <h1 className="mb-6 text-xl font-semibold">Dashboard</h1>
 
       <h2 className="mb-3 text-sm font-medium text-blue-500">Recent activity</h2>
       {loading ? <p className="text-sm text-blue-500">Loading…</p> : <ActivityFeed entries={entries} />}
