@@ -1,55 +1,46 @@
-import { useEffect, useState } from 'react'
 import { listComments } from '../api/comments'
 import { listConversations } from '../api/messages'
-import { ActivityFeed, type ActivityEntry } from '../components/ActivityFeed'
+import { usePolling } from '../hooks/usePolling'
+
+function Stat({ label, value, hint }: { label: string; value: number | string; hint: string }) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-4" title={hint}>
+      <p className="text-2xl font-semibold">{value}</p>
+      <p className="text-sm text-slate-600">{label}</p>
+      <p className="mt-1 text-xs text-slate-400">{hint}</p>
+    </div>
+  )
+}
 
 export function DashboardPage() {
-  const [entries, setEntries] = useState<ActivityEntry[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data: conversations } = usePolling(listConversations, 15000)
+  const { data: comments } = usePolling(listComments, 15000)
 
-  useEffect(() => {
-    let cancelled = false
-
-    async function load() {
-      const [comments, conversations] = await Promise.all([listComments(), listConversations()])
-      if (cancelled) return
-
-      const commentEntries: ActivityEntry[] = comments.map((comment) => ({
-        id: comment.id,
-        type: 'comment',
-        username: comment.username,
-        text: comment.text,
-        timestamp: comment.timestamp,
-      }))
-
-      const dmEntries: ActivityEntry[] = conversations.map((conversation) => ({
-        id: conversation.id,
-        type: 'dm',
-        username: conversation.participantUsername,
-        text: conversation.lastMessagePreview,
-        timestamp: conversation.lastMessageAt,
-      }))
-
-      const merged = [...commentEntries, ...dmEntries].sort(
-        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-      )
-
-      setEntries(merged)
-      setLoading(false)
-    }
-
-    void load()
-    return () => {
-      cancelled = true
-    }
-  }, [])
+  const inbound = conversations?.flatMap((c) => c.messages.filter((m) => m.kind === 'inbound')) ?? []
+  const autoAnswered = inbound.filter((m) => m.status === 'REPLIED').length
+  const needsYou =
+    inbound.filter((m) => m.status === 'NEEDS_HUMAN').length +
+    (comments?.filter((c) => c.status === 'NEEDS_HUMAN').length ?? 0)
+  const loading = !conversations || !comments
 
   return (
     <div className="max-w-3xl">
-      <h1 className="mb-6 text-xl font-semibold">Dashboard</h1>
-
-      <h2 className="mb-3 text-sm font-medium text-blue-500">Recent activity</h2>
-      {loading ? <p className="text-sm text-blue-500">Loading…</p> : <ActivityFeed entries={entries} />}
+      <h1 className="text-xl font-semibold">Overview</h1>
+      <p className="mb-6 mt-1 text-sm text-slate-500">
+        How it works: when someone sends your Instagram account a direct message or comments on your post, the app
+        answers within seconds using the answers your business provided. Anything it can't answer is marked for you to
+        reply to yourself on the Messages or Comments page.
+      </p>
+      {loading ? (
+        <p className="text-sm text-slate-500">Loading…</p>
+      ) : (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Stat label="Conversations" value={conversations.length} hint="People who sent you a direct message" />
+          <Stat label="Answered automatically" value={autoAnswered} hint="Direct messages the app replied to" />
+          <Stat label="Comments" value={comments.length} hint="Comments on your posts" />
+          <Stat label="Need your reply" value={needsYou} hint="Questions the app had no answer for" />
+        </div>
+      )}
     </div>
   )
 }

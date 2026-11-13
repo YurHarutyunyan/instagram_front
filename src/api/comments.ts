@@ -1,21 +1,14 @@
-import { mockComments } from '../mocks/fixtures'
 import type { Comment } from '../types/comment'
-import { sleep } from './client'
+import type { Message } from '../types/message'
+import { apiFetch } from './client'
 
-// MOCK: backend has no GET /posts/{mediaId}/comments endpoint yet.
-export async function listComments(mediaId?: string): Promise<Comment[]> {
-  await sleep(300)
-  return mediaId ? mockComments.filter((comment) => comment.mediaId === mediaId) : mockComments
+export function listComments(): Promise<Comment[]> {
+  return apiFetch<Comment[]>('/dashboard/comments')
 }
 
-// MOCK: backend has no manual reply-to-comment endpoint yet — today replies
-// only happen automatically via the /webhook -> ReplyRulesService flow.
-export async function replyToComment(commentId: string, _text: string): Promise<Comment | undefined> {
-  await sleep(300)
-  const comment = mockComments.find((c) => c.id === commentId)
-  if (comment) {
-    comment.replied = true
-    comment.repliedAt = new Date().toISOString()
-  }
-  return comment
+export function replyToComment(commentId: number, text: string): Promise<Message> {
+  return apiFetch<Message>(`/dashboard/comments/${commentId}/replies`, {
+    method: 'POST',
+    body: JSON.stringify({ text }),
+  })
 }

@@ -1,31 +1,23 @@
-import { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { getAccount } from '../api/account'
+import { logout } from '../api/account'
 import type { Account } from '../types/account'
 
 const navItems = [
-  { to: '/', label: 'Dashboard', end: true },
-  { to: '/comments', label: 'Comments' },
+  { to: '/', label: 'Overview', end: true },
   { to: '/messages', label: 'Messages' },
+  { to: '/comments', label: 'Comments' },
 ]
 
-export function Layout() {
-  const [account, setAccount] = useState<Account | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    getAccount().then((result) => {
-      if (!cancelled) setAccount(result)
-    })
-    return () => {
-      cancelled = true
-    }
-  }, [])
+export function Layout({ account, onSignedOut }: { account: Account; onSignedOut: () => void }) {
+  async function handleLogout() {
+    await logout().catch(() => undefined)
+    onSignedOut()
+  }
 
   return (
-    <div className="flex min-h-screen bg-red-50 text-blue-900">
-      <aside className="w-56 shrink-0 border-r border-blue-200 bg-red-100">
-        <div className="px-5 py-5 text-lg font-semibold">IG Automation</div>
+    <div className="flex min-h-screen bg-slate-50 text-slate-900">
+      <aside className="w-56 shrink-0 border-r border-slate-200 bg-white">
+        <div className="px-5 py-5 text-lg font-semibold">Mango</div>
         <nav className="flex flex-col gap-1 px-3">
           {navItems.map((item) => (
             <NavLink
@@ -34,7 +26,7 @@ export function Layout() {
               end={item.end}
               className={({ isActive }) =>
                 `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive ? 'bg-blue-900 text-white' : 'text-blue-700 hover:bg-blue-200'
+                  isActive ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'
                 }`
               }
             >
@@ -44,22 +36,27 @@ export function Layout() {
         </nav>
       </aside>
       <div className="flex flex-1 flex-col">
-        <header className="flex items-center gap-3 border-b border-blue-200 bg-white px-8 py-3">
-          {account ? (
-            <>
-              <img
-                src={account.avatarUrl}
-                alt={account.name}
-                className="h-9 w-9 rounded-full object-cover"
-              />
-              <div className="leading-tight">
-                <p className="text-sm font-medium">{account.name}</p>
-                <p className="text-xs text-blue-500">@{account.username}</p>
-              </div>
-            </>
+        <header className="flex items-center gap-3 border-b border-slate-200 bg-white px-8 py-3">
+          {account.profilePictureUrl ? (
+            <img src={account.profilePictureUrl} alt="" className="h-10 w-10 rounded-full object-cover" />
           ) : (
-            <div className="h-9" />
+            <div className="h-10 w-10 rounded-full bg-slate-200" />
           )}
+          <div className="leading-tight" title="Your Instagram account, read from Instagram (instagram_business_basic)">
+            <p className="text-sm font-medium">{account.name ?? `@${account.username}`}</p>
+            <p className="text-xs text-slate-500">
+              @{account.username}
+              {account.followersCount != null && ` · ${account.followersCount} followers`}
+              {account.mediaCount != null && ` · ${account.mediaCount} posts`}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => void handleLogout()}
+            className="ml-auto rounded-md px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100"
+          >
+            Log out
+          </button>
         </header>
         <main className="flex-1 px-8 py-6">
           <Outlet />
